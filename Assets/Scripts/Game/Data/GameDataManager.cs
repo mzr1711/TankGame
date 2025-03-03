@@ -11,6 +11,7 @@ public class GameDataManager
     public static GameDataManager Instance { get => instance; }
 
     public MusicData musicData;
+    public RankList rankList;
 
     private GameDataManager()
     {
@@ -24,11 +25,25 @@ public class GameDataManager
             musicData.notFirstLoad = true;
         }
         PlayerPrefsDataManager.Instance.SaveData(musicData, "MusicData");
+
+        rankList = PlayerPrefsDataManager.Instance.LoadData(typeof(RankList), "RankList") as RankList;
+    }
+
+    public void AddRankData(string playerName, int score, float time)
+    {
+        rankList.list.Add(new RankData(playerName, score, time));
+        rankList.list.Sort((a, b) => a.time < b.time ? -1 : 1);
+        for(int i = rankList.list.Count - 1; i >= 8; i--)
+        {
+            rankList.list.RemoveAt(i);
+        }
+        PlayerPrefsDataManager.Instance.SaveData(rankList, "RankList");
     }
 
     public void ChangeMusicValue(float value)
     {
         musicData.musicValue = value;
+        BkMusic.Instance.ChangeValue(value);
         PlayerPrefsDataManager.Instance.SaveData(musicData, "MusicData");
     }
 
@@ -38,15 +53,16 @@ public class GameDataManager
         PlayerPrefsDataManager.Instance.SaveData(musicData, "MusicData");
     }
 
-    public void OpenOrCloseMusic(bool value)
+    public void OpenOrCloseMusic(bool isOpen)
     {
-        musicData.isOpenMusic = value;
+        musicData.isOpenMusic = isOpen;
+        BkMusic.Instance.ChangeOpen(isOpen);
         PlayerPrefsDataManager.Instance.SaveData(musicData, "MusicData");
     }
 
-    public void OpenOrCloseSound(bool value)
+    public void OpenOrCloseSound(bool isOpen)
     {
-        musicData.isOpenSound = value;
+        musicData.isOpenSound = isOpen;
         PlayerPrefsDataManager.Instance.SaveData(musicData, "MusicData");
     }
 }

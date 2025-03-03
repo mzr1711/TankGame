@@ -89,7 +89,7 @@ public class PlayerPrefsDataManager
         }
         else if (t.GetType().IsClass)
         {
-            SaveData(t, saveName);
+            SaveData(saveData, saveName);
         }
     }
 

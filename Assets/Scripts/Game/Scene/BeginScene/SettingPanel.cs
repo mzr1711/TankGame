@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SettingPanel : BasePanel<SettingPanel>
 {
@@ -14,7 +15,10 @@ public class SettingPanel : BasePanel<SettingPanel>
     {
         btnClose.clickEvent += () =>
         {
-            BeginPanel.Instance.ShowMe();
+            if(SceneManager.GetActiveScene().name == "BeginScene")
+            {
+                BeginPanel.Instance.ShowMe();
+            }
             HideMe();
         };
         sliderMusic.changeValue += (value) => GameDataManager.Instance.ChangeMusicValue(value);
@@ -38,5 +42,11 @@ public class SettingPanel : BasePanel<SettingPanel>
     {
         base.ShowMe();
         UpdatePanelInfo();
+    }
+
+    public override void HideMe()
+    {
+        base.HideMe();
+        Time.timeScale = 1;
     }
 }
