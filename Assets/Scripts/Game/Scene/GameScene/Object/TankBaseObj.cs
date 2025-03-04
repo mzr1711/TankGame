@@ -47,4 +47,13 @@ public abstract class TankBaseObj : MonoBehaviour
             aus.Play();
         }
     }
+
+    public virtual void Treat(int value)
+    {
+        hp += value;
+        if(hp >= maxHp)
+        {
+            hp = maxHp;
+        }
+    }
 }
