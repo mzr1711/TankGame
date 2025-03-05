@@ -33,4 +33,9 @@ public class EnemyTankTowerObj : TankBaseObj
             obj.GetComponent<BulletObj>().SetOwner(this);
         }
     }
+
+    public override void Wound(TankBaseObj other)
+    {
+
+    }
 }

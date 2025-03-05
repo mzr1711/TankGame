@@ -17,6 +17,8 @@ public abstract class TankBaseObj : MonoBehaviour
 
     public GameObject deadEff;
 
+    private int scoreValue = 10;
+
     public abstract void Fire();
 
     public virtual void Wound(TankBaseObj other)
@@ -37,6 +39,8 @@ public abstract class TankBaseObj : MonoBehaviour
     public virtual void Dead()
     {
         Destroy(gameObject);
+
+        GamePanel.Instance.UpdateScore(scoreValue);
 
         if(deadEff != null)
         {

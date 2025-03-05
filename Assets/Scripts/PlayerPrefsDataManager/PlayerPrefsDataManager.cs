@@ -1,10 +1,7 @@
-using OpenCover.Framework.Model;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-using static UnityEditor.LightingExplorerTableColumn;
 
 /// <summary>
 /// PlayerPrefs数据管理类，统一管理数据的读取和存储
@@ -108,7 +105,7 @@ public class PlayerPrefsDataManager
         object data = Activator.CreateInstance(type);
         FieldInfo[] infos = type.GetFields();
         string getName = "";
-        for(int i = 0; i < infos.Length; i++)
+        for (int i = 0; i < infos.Length; i++)
         {
             getName = keyName + "_" + type.Name + "_" +
                 infos[i].FieldType.Name + "_" + infos[i].Name;
@@ -124,19 +121,19 @@ public class PlayerPrefsDataManager
         {
             return PlayerPrefs.GetInt(getName);
         }
-        else if(type == typeof(float))
+        else if (type == typeof(float))
         {
             return PlayerPrefs.GetFloat(getName);
         }
-        else if(type == typeof(string))
+        else if (type == typeof(string))
         {
             return PlayerPrefs.GetString(getName);
         }
-        else if(type == typeof(bool))
+        else if (type == typeof(bool))
         {
             return PlayerPrefs.GetInt(getName) == 1 ? true : false;
         }
-        else if(typeof(IList).IsAssignableFrom(type))
+        else if (typeof(IList).IsAssignableFrom(type))
         {
             int count = PlayerPrefs.GetInt(getName);
             IList iList = Activator.CreateInstance(type) as IList;
@@ -146,18 +143,18 @@ public class PlayerPrefsDataManager
             }
             return iList;
         }
-        else if(typeof(IDictionary).IsAssignableFrom(type))
+        else if (typeof(IDictionary).IsAssignableFrom(type))
         {
             int count = PlayerPrefs.GetInt(getName);
             IDictionary iDic = Activator.CreateInstance(type) as IDictionary;
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 iDic.Add(LoadValue(type.GetGenericArguments()[0], getName + "_key_" + i),
                     LoadValue(type.GetGenericArguments()[1], getName + "_value_" + i));
             }
             return iDic;
         }
-        else if(type.IsClass)
+        else if (type.IsClass)
         {
             return LoadData(type, getName);
         }

@@ -96,8 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df04743865a2ec342bd8f16db433c4b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
+  moveSpeed: 50
   ownerTankObj: {fileID: 0}
+  ownerTag: 
   boomEffObj: {fileID: 4846461961415329261, guid: e97e374dfd0388c43a684f7ba6d780f8, type: 3}
 --- !u!1 &1841775347405311147
 GameObject:

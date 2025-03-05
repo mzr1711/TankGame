@@ -18,22 +18,25 @@ public class Reward : MonoBehaviour
     public RewardType type;
 
     private int treatValue = 20;
-
     private int atkAddValue = 10;
+    private int defAddValue = 5;
 
-    private int defAddValue = 10;
+    private int scoreValue = 2;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
+            GamePanel.Instance.UpdateScore(scoreValue);
+
             PlayerObj player = other.GetComponent<PlayerObj>();
+
             switch (type)
             {
                 case RewardType.Weapon: RewardWeapon(player); break;
                 case RewardType.HP: RewardHp(player); break;
                 case RewardType.ATK: RewardAtk(player); break;
-                case RewardType.DEF: RewardAtk(player); break;
+                case RewardType.DEF: RewardDef(player); break;
                 case RewardType.SPEED: RewardSpeed(player); break;
             }
 

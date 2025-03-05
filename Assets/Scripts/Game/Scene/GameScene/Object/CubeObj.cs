@@ -11,24 +11,32 @@ public class CubeObj : MonoBehaviour
 
     public GameObject breakEff;
 
+    private int scoreValue = 1;
+
     void OnTriggerEnter(Collider other)
     {
-        hittedCount++;
-        if(hittedCount >= maxHittedCount)
+        BulletObj bullet = other.GetComponent<BulletObj>();
+        if(bullet != null && bullet.ownerTag == "Player")
         {
-            int index = Random.Range(0, 100);
-            if (index < 30)
+            hittedCount++;
+            if (hittedCount >= maxHittedCount)
             {
-                index = Random.Range(0, rewards.Length);
-                Instantiate(rewards[index], transform.position, transform.rotation);
+                GamePanel.Instance.UpdateScore(scoreValue);
+
+                int index = Random.Range(0, 100);
+                if (index < 30)
+                {
+                    index = Random.Range(0, rewards.Length);
+                    Instantiate(rewards[index], transform.position, transform.rotation);
+                }
+
+                GameObject eff = Instantiate(breakEff, transform.position, transform.rotation);
+                AudioSource aus = eff.GetComponent<AudioSource>();
+                aus.volume = GameDataManager.Instance.musicData.soundValue;
+                aus.mute = !GameDataManager.Instance.musicData.isOpenSound;
+
+                Destroy(gameObject);
             }
-
-            GameObject eff = Instantiate(breakEff, transform.position, transform.rotation);
-            AudioSource aus = eff.GetComponent<AudioSource>();
-            aus.volume = GameDataManager.Instance.musicData.soundValue;
-            aus.mute = !GameDataManager.Instance.musicData.isOpenSound;
-
-            Destroy(gameObject);
         }
     }
 }

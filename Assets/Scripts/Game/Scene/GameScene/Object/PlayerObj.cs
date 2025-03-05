@@ -16,8 +16,8 @@ public class PlayerObj : TankBaseObj
     private float speedUpTimer = 0;
     private float preMoveSpeed;
 
-
-    private bool isCursorLocked = true;
+    [HideInInspector]
+    public bool isCursorLocked = true;
 
     void Start()
     {
@@ -82,11 +82,22 @@ public class PlayerObj : TankBaseObj
     public override void Dead()
     {
         base.Dead();
+
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
+        FailurePanel.Instance.ShowMe();
     }
 
     public override void Wound(TankBaseObj other)
     {
         base.Wound(other);
+
+        GamePanel.Instance.UpdateHP(maxHp, hp);
+    }
+
+    public override void Treat(int value)
+    {
+        base.Treat(value);
 
         GamePanel.Instance.UpdateHP(maxHp, hp);
     }

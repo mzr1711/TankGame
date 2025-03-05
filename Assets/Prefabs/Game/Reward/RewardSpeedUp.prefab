@@ -83,9 +83,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   getEff: {fileID: 759351190904159257, guid: f6580d96436b7ed49aff3cc05c610f3e, type: 3}
   type: 4
-  treatValue: 20
-  atkAddValue: 10
-  defAddValue: 10
 --- !u!1 &7290384039312064912
 GameObject:
   m_ObjectHideFlags: 0

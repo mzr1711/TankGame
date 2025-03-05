@@ -7,12 +7,13 @@ public class BulletObj : MonoBehaviour
     public float moveSpeed = 20;
 
     public TankBaseObj ownerTankObj;
+    public string ownerTag;
 
     public GameObject boomEffObj;
 
     void Start()
     {
-
+        ownerTag = ownerTankObj.tag;
     }
 
     void Update()
@@ -22,9 +23,17 @@ public class BulletObj : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Cube")
+        if ((other.gameObject.tag == "Cube") ||
+            (other.gameObject.tag == "Enemy" && ownerTag == "Player") ||
+            (other.gameObject.tag == "Player" && ownerTag == "Enemy"))
         {
-            if(boomEffObj != null)
+            TankBaseObj obj = other.GetComponent<TankBaseObj>();
+            if(obj != null)
+            {
+                obj.Wound(ownerTankObj);
+            }
+
+            if (boomEffObj != null)
             {
                 GameObject eff = Instantiate(boomEffObj, transform.position, transform.rotation);
                 AudioSource aus = eff.GetComponent<AudioSource>();
@@ -35,7 +44,7 @@ public class BulletObj : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
     public void SetOwner(TankBaseObj obj)
     {
         ownerTankObj = obj;
